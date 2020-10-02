@@ -20,9 +20,7 @@ router.post("/url", async (req, res) => {
       res.status(500).json({ success: false, msg: "error occured" });
     }
   } else {
-    res
-      .status(500)
-      .json({ success: false, msg: `'${url}' is not a valid url` });
+    res.status(500).json({ success: false, msg: "invalid url" });
   }
 });
 
