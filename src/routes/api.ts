@@ -12,7 +12,7 @@ router.post("/url", async (req, res) => {
       const shortUrl = await store.put(url);
       res.status(200).json({
         success: true,
-        shortUrl: `${process.env.FE_HOST}#${shortUrl}`,
+        shortUrl: `${process.env.FE_HOST}/${shortUrl}`,
         longUrl: url,
       });
     } catch (err) {
@@ -29,12 +29,12 @@ router.get("/:shortUrl", async (req, res) => {
   try {
     const url = await store.get(shortUrl);
     if (url !== null) {
-      res.status(200).json({ success: true, url });
+      res.redirect(url);
       return;
     }
-    res.status(404).json({ success: false, msg: "no target at this url" });
+    res.redirect(`${process.env.FE_HOST}/error`);
   } catch (err) {
-    res.status(500).json({ success: false, msg: "error occured" });
+    res.redirect(`${process.env.FE_HOST}/error`);
   }
 });
 
